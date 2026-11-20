@@ -1,0 +1,8 @@
+name = "Post-purchase upsell"
+handle = "post-purchase-upsell"
+type = "checkout_post_purchase"
+uid = "f034a000-dc61-40cf-a076-83a06ed7ab2a"
+
+# [[metafields]]
+# namespace = "my-namespace"
+# key = "my-key"
