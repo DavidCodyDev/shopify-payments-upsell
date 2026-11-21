@@ -17,7 +17,8 @@
     "prisma": "prisma",
     "graphql-codegen": "graphql-codegen",
     "vite": "vite",
-    "typecheck": "react-router typegen && tsc --noEmit"
+    "typecheck": "react-router typegen && tsc --noEmit",
+    "preview:upsell": "python3 -m http.server 4173 --bind 127.0.0.1 --directory preview"
   },
   "type": "module",
   "engines": {

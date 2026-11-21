@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Post-purchase upsell preview</title>
+    <style>
+      :root {
+        --bg: #f6f6f7;
+        --surface: #ffffff;
+        --ink: #202223;
+        --muted: #6d7175;
+        --line: #e1e3e5;
+        --banner: #fff5d6;
+        --banner-border: #e1b878;
+        --critical: #d82c0d;
+        --button: #202223;
+        --button-hover: #000000;
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .preview-bar {
+        background: #1a1c1d;
+        color: #f6f6f7;
+        font-size: 13px;
+        letter-spacing: 0.01em;
+        padding: 8px 16px;
+        text-align: center;
+      }
+
+      .preview-bar strong {
+        font-weight: 650;
+      }
+
+      .page {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+      }
+
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .banner {
+        background: var(--banner);
+        border: 1px solid var(--banner-border);
+        border-radius: var(--radius);
+        padding: 16px 18px;
+      }
+
+      .banner-title {
+        font-size: 16px;
+        font-weight: 650;
+        margin: 0 0 6px;
+      }
+
+      .banner-body {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .layout {
+        display: grid;
+        gap: 24px;
+        align-items: start;
+      }
+
+      .product-image {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 4px;
+        background: #eee;
+        display: block;
+      }
+
+      h1 {
+        font-size: 22px;
+        line-height: 1.25;
+        margin: 0 0 8px;
+        font-weight: 650;
+      }
+
+      .price-row {
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+        margin: 0 0 12px;
+      }
+
+      .price-original {
+        font-size: 20px;
+        color: var(--muted);
+        text-decoration: line-through;
+      }
+
+      .price-now {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--critical);
+      }
+
+      .description {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .description p {
+        margin: 0 0 4px;
+      }
+
+      .money {
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 12px 0;
+      }
+
+      .money-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 14px;
+        padding: 6px 0;
+      }
+
+      .money-line.total {
+        font-size: 16px;
+        font-weight: 650;
+        padding-top: 10px;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      button {
+        font: inherit;
+        cursor: pointer;
+        border-radius: var(--radius);
+        padding: 12px 16px;
+        font-weight: 650;
+      }
+
+      .btn-pay {
+        background: var(--button);
+        color: #fff;
+        border: 1px solid var(--button);
+      }
+
+      .btn-pay:hover {
+        background: var(--button-hover);
+      }
+
+      .btn-decline {
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+
+      .result {
+        display: none;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 28px 20px;
+        text-align: center;
+      }
+
+      .result h2 {
+        margin: 0 0 8px;
+        font-size: 20px;
+      }
+
+      .result p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+
+      .offer {
+        background: var(--surface);
+        border-radius: 12px;
+        padding: 8px 0 0;
+      }
+
+      body.show-accepted .offer,
+      body.show-declined .offer {
+        display: none;
+      }
+
+      body.show-accepted .result-accepted,
+      body.show-declined .result-declined {
+        display: block;
+      }
+
+      @media (min-width: 760px) {
+        .layout {
+          grid-template-columns: minmax(280px, 560px) minmax(260px, 340px);
+          column-gap: 38px;
+          justify-content: center;
+        }
+
+        .page {
+          padding-top: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-bar">
+      Local preview · fake product and prices · <strong>no payment is taken</strong>
+    </div>
+    <main class="page">
+      <section class="offer stack">
+        <div class="banner">
+          <p class="banner-title">It's not too late to add this to your order</p>
+          <p class="banner-body">
+            Add the Canvas Travel Backpack to your order and <strong>20% off</strong>
+          </p>
+        </div>
+        <div class="layout">
+          <img
+            class="product-image"
+            alt="Canvas Travel Backpack"
+            src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-product-1_large.png"
+          />
+          <div>
+            <h1>Canvas Travel Backpack</h1>
+            <div class="price-row">
+              <span class="price-original">$68.00</span>
+              <span class="price-now">$54.40</span>
+            </div>
+            <div class="description">
+              <p>Add this product to your order. You'll be charged with the same payment method.</p>
+              <p>Everyday canvas pack for post-purchase add-on testing.</p>
+            </div>
+            <div class="money">
+              <div class="money-line">
+                <span>Subtotal</span>
+                <strong>$54.40</strong>
+              </div>
+              <div class="money-line">
+                <span>Shipping</span>
+                <strong>Free</strong>
+              </div>
+              <div class="money-line">
+                <span>Taxes</span>
+                <strong>$4.35</strong>
+              </div>
+              <div class="money-line total">
+                <span>Total</span>
+                <strong>$58.75</strong>
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn-pay" type="button" id="accept">Pay now · $58.75</button>
+              <button class="btn-decline" type="button" id="decline">Decline this offer</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="result result-accepted">
+        <h2>Added to your order</h2>
+        <p>Preview only. Shopify would charge the original payment method here. Nothing was captured.</p>
+        <button class="btn-pay" type="button" id="reset-accept">Show offer again</button>
+      </section>
+
+      <section class="result result-declined">
+        <h2>Offer declined</h2>
+        <p>Preview only. Checkout would continue to the thank-you page. No charge was made.</p>
+        <button class="btn-pay" type="button" id="reset-decline">Show offer again</button>
+      </section>
+    </main>
+    <script>
+      const body = document.body;
+      document.getElementById("accept").addEventListener("click", () => {
+        body.classList.remove("show-declined");
+        body.classList.add("show-accepted");
+      });
+      document.getElementById("decline").addEventListener("click", () => {
+        body.classList.remove("show-accepted");
+        body.classList.add("show-declined");
+      });
+      document.getElementById("reset-accept").addEventListener("click", () => {
+        body.classList.remove("show-accepted", "show-declined");
+      });
+      document.getElementById("reset-decline").addEventListener("click", () => {
+        body.classList.remove("show-accepted", "show-declined");
+      });
+    </script>
+  </body>
+</html>

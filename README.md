@@ -21,6 +21,16 @@ Do not invent Partner API keys. Run `shopify app dev` and let the CLI create or 
 4. Accept calls `/api/sign-changeset`. The server verifies the post-purchase token, prices the offer from stored settings, and signs the changeset. Shopify charges the original payment method.
 5. Decline calls `/api/decline` and continues to the order status page.
 
+## Local preview (no payment)
+
+Open a static mock of the post-purchase screen without a store, checkout, or card charge. It copies the extension layout in `extensions/post-purchase-upsell/src/index.jsx` with a fake product, price, and 20% discount. Accept and decline only switch mock states. Production checkout is unchanged.
+
+```bash
+npm run preview:upsell
+```
+
+Then open [http://127.0.0.1:4173/upsell.html](http://127.0.0.1:4173/upsell.html). The file is `preview/upsell.html`.
+
 ## Local development
 
 ### Prerequisites
